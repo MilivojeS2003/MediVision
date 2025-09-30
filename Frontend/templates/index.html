@@ -10,28 +10,39 @@
     <div class="" id="mainDiv">
         <h1>{{ message }}</h1>
         <h3>My luckyNumber: {{ luckyNumber }}</h3>
-        <p>{{ employee.name }} is {{ employee.age }} years old.</p>
+        <h4 v-once>Render once my luckynumber : {{ luckyNumber }}</h4>
+        <p>{{ employee.name }} is {{ employee.age }} years old. Salary {{ employee.salary }}</p>
         <p>RANDOM NUMBER: {{randomNumberGen()}}</p>
         
         <hr>
         <h2>{{ counter }}</h2>
         <button @click="counter++">Click</button>
+        <span v-html="createMessage()"></span>
+        <hr>
+        <a v-bind:href="blogUrl">View Blog</a>
+        <p v-once v-show="employee.salaryView">Salary:{{ employee.salary }}</p>
+        <p v-once v-if="employee.salaryView">Salary:{{ employee.salary }}</p>
+        <p v-else>Salary is not found</p>
     </div>
 </body>
 
 <script>
 
-    const { createApp, ref } = Vue;
+    const { createApp, ref, reactive /*, onMounted*/  } = Vue;
 
     createApp({
         setup(){
+            const message2 = "Pozdrav Narode"
+            const blogUrl = 'https://vuejs.org/guide/quick-start.html'
             let counter = ref(0)
-            const luckyNumber = 7;
-            const employee = {
+            const luckyNumber = ref(7);
+            const employee = reactive({
                 name:"Milivoje",
                 age:22,
-                salary: "2000$"
-            }
+                salary: "2000$",
+                salaryView:false,
+
+            })
 
              function randomNumberGen() { 
                 return Math.floor(Math.random()*10 + 1);
@@ -41,13 +52,33 @@
                 counter ++;
             }
 
+            /* onMounted(() => {
+                updateLuckyNumber();
+            });*/
+
+            function updateLuckyNumber(){
+                setTimeout(()=>{
+                    luckyNumber.value = 222;
+                    employee.salary = "$3000"
+                },2000)
+            }
+            
+            updateLuckyNumber()
+
+            function createMessage(){
+                return `<h1><u>${message2}</u></h1>`
+            }
+
             return{
                 message: "Hello world",
                 luckyNumber,
                 employee,
                 randomNumberGen,
                 counter,
-                increase
+                increase,
+                updateLuckyNumber,
+                createMessage,
+                blogUrl
             };
 
            
