@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="" id="mainDiv">
+        <h1>{{ message }}</h1>
+        <h3>My luckyNumber: {{ luckyNumber }}</h3>
+        <p>{{ employee.name }} is {{ employee.age }} years old.</p>
+        <p>RANDOM NUMBER: {{randomNumberGen()}}</p>
+        
+        <hr>
+        <h2>{{ counter }}</h2>
+        <button @click="counter++">Click</button>
+    </div>
+</body>
+
+<script>
+
+    const { createApp, ref } = Vue;
+
+    createApp({
+        setup(){
+            let counter = ref(0)
+            const luckyNumber = 7;
+            const employee = {
+                name:"Milivoje",
+                age:22,
+                salary: "2000$"
+            }
+
+             function randomNumberGen() { 
+                return Math.floor(Math.random()*10 + 1);
+            }
+
+            function increase() {
+                counter ++;
+            }
+
+            return{
+                message: "Hello world",
+                luckyNumber,
+                employee,
+                randomNumberGen,
+                counter,
+                increase
+            };
+
+           
+        },
+    }).mount("#mainDiv");
+</script>
+</html>
