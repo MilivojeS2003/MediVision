@@ -30,19 +30,24 @@
         <button v-on:click="buttonClick('Hello World')">Open alert</button>
         <br><br><br>
         <hr>
-        <input type="text" v-model="name"/><br>
-        <input type="text" v-model="age"/>
+        <input type="text" v-model.trim="name"/><br>
+        <input type="text" v-model.lazy="age"/>
         <p>Name: {{ name }}, Age: {{ age }} </p>
+
+        <p>{{getFullName}}</p>
+        <!-- <p>{{getFullName()}}</p> -->
+
     </div>
 </body>
 
 <script>
 
-    const { createApp, ref, reactive /*, onMounted*/  } = Vue;
+    const { createApp, ref, reactive, computed /*, onMounted*/  } = Vue;
 
     createApp({
         setup(){
             let name = ref('Micko')
+            let lastName = ref('Sindjic')
             let age = ref(18)
             const message2 = "Pozdrav Narode"
             const blogUrl = 'https://vuejs.org/guide/quick-start.html'
@@ -51,6 +56,7 @@
             const luckyNumber = ref(7);
             const employee = reactive({
                 name:"Milivoje",
+                lastname:'Sindjic',
                 age:22,
                 salary: "2000$",
                 salaryView:false,
@@ -86,6 +92,25 @@
                 alert(message)
             }
 
+            const getFullName = computed((previous)=> {
+                console.log('getfullname was called');
+                 if (previous === 'Milivoje 1 Sindjic'){
+                    console.log("Milivoje sindjic -> special case");
+                }
+                return name.value + " " + employee.lastname
+            })
+
+            /*function getFullName(previous) {
+                console.log('getfullname was called');
+               
+                return employee.name + " " + employee.lastname
+            }*/
+
+            watch(()=>counter.value,(newValue,oldValue)=>{
+                console.log("Counter value changed from" + oldValue + " to " + newValue);
+            })
+
+
             return{
                 message: "Hello world",
                 luckyNumber,
@@ -99,7 +124,8 @@
                 myArray,
                 buttonClick,
                 name,
-                age
+                age,
+                getFullName
             };
 
            
