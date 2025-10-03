@@ -42,7 +42,7 @@
 
 <script>
 
-    const { createApp, ref, reactive, computed /*, onMounted*/  } = Vue;
+    const { createApp, ref, reactive, computed, watch /*, onMounted*/  } = Vue;
 
     createApp({
         setup(){
@@ -106,8 +106,11 @@
                 return employee.name + " " + employee.lastname
             }*/
 
-            watch(()=>counter.value,(newValue,oldValue)=>{
-                console.log("Counter value changed from" + oldValue + " to " + newValue);
+            watch(counter, (newValue,oldValue)=>{
+                console.log("Counter value changed from " + oldValue + " to " + newValue);
+                if(oldValue > 5){
+                    console.log(`Old value is more then 5`);
+                }
             })
 
 
