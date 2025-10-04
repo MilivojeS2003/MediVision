@@ -9,19 +9,21 @@
 <body class="bg-light">
   <div id="app" class="container py-5">
     <h3 class="mb-4">Registracija</h3>
-
+    <ul v-for="error in errorList">
+        <li class="text-danger">{{error}}</li>
+    </ul>
     <form class="row g-3 needs-validation" v-on:submit.prevent="handleSubmit">
       <!-- Ime i prezime -->
       <div class="col-md-6">
         <label for="name" class="form-label">Ime i prezime</label>
-        <input id="name" type="text" class="form-control" v-model.trim="formObj.name"  @blur="validateName()"  required/>
+        <input id="name" type="text" class="form-control" v-model.trim="formObj.name"  @blur="validateName()"/>
         <div v-if="!formObj.isNameValid" class="text-danger">Unesite ime (min 2 znaka).</div>
       </div>
 
       <!-- Email -->
       <div class="col-md-6">
         <label for="email" class="form-label">Email</label>
-        <input id="email" type="email" class="form-control" v-model.trim="formObj.email" required />
+        <input id="email" type="email" class="form-control" v-model.trim="formObj.email"/>
         <div class="invalid-feedback">Unesite ispravan email.</div>
       </div>
 
@@ -101,9 +103,7 @@
           isNameValid:true
         });
 
-    function handleSubmit(){
-        console.log(formObj);
-    }
+    errorList = reactive([])
 
     function validateName(){
         if(formObj.name.length  > 3){
@@ -112,7 +112,26 @@
             formObj.isNameValid = false;
         }
     }
-        return { formObj,handleSubmit,validateName };
+
+    function handleSubmit(){
+        errorList.length = 0;
+        const reEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+        if(formObj.name.length < 3){
+            errorList.push("Name should be at least 3 character long")
+        } 
+        if(!reEmail.test(formObj.email)){
+            errorList.push('Email is not valid')
+        }
+        if(!formObj.subsribe){
+            errorList.push('Pleas subscribe to newsletter')
+        }
+        console.log(formObj);
+        if(errorList.length === 0){
+            alert("Form sumbited succesfully")
+        }
+    }
+        return { formObj,handleSubmit,validateName,errorList };
       }
     }).mount('#app');
   </script>
