@@ -1,0 +1,87 @@
+<!DOCTYPE html class="h-full">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Document</title>
+</head>
+<body class="h-full grid place-items-center">
+    <style>
+        .text-green{
+            color:green;
+        }
+
+        .text-red{
+            color:red;
+        }
+    </style>
+    <div id="app">
+        
+        <!-- <button v-bind:class="buttonClasses" v-on:click="toggle">Click me (toggle)</button>
+        <button :class="active ? 'text-red' : 'text-green' " @click="toggleColor">Click me</button> -->
+
+        <br>
+        <section v-show="assigments.filter(a => ! a.complete).length">
+            <h2 class="font-bold mb-3">In progress</h2>
+            <ul>
+                <li 
+                    v-for="assigment in assigments.filter(a => ! a.complete)" 
+                    :key="assigment.id">{{assigment.name}} 
+                    <input type="checkbox" v-model="assigment.complete" />
+                </li>
+            </ul>
+
+        </section>
+
+        <section class="mt-8" v-show="assigments.filter(a => a.complete).length">
+            <h2 class="font-bold mb-3">Completed</h2>
+            <ul>
+                <li 
+                    v-for="assigment in assigments.filter(a => a.complete)" 
+                    :key="assigment.id">{{assigment.name}} 
+                    <input type="checkbox" v-model="assigment.complete"/>
+                </li>
+            </ul>
+        </section>
+
+        <pre class="mt-8">{{assigments}}</pre>  
+    </div>
+
+    <script>
+        let app = {
+            data(){
+                return{
+                    assigments:[
+                        {name:'Finish project', complete:false, id:1},
+                        {name:'Read chapter 3', complete:false, id:2},
+                        {name:'Turn in homework', complete:false, id:3}
+                    ]
+                }
+            }
+        }
+        Vue.createApp(app
+            /*
+            {data(){
+                return {
+                    buttonClasses:'text-green',
+                    active:false
+                };
+            },
+
+            methods:{
+                toggle(){
+                    alert('toggle')
+                },
+
+                toggleColor(){
+                    this.active = !this.active
+                }
+            }
+         } */
+
+        ).mount('#app')
+    </script>
+</body>
+</html>
