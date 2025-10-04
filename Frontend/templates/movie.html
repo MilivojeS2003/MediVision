@@ -53,6 +53,8 @@
           </form>
         </div>
       </div>
+
+      
     </div>
 
     <!-- Učitaj VUE prije tvog koda -->
@@ -113,7 +115,15 @@
             { immediate: true }
           );
 
-          return { movies, newMovie, addMovie, removeMovie, showMessage };
+          const formObj = reactive({
+            email:"",
+            name:"",
+            phone:"",
+            subsribe:false,
+            gender:""
+          })
+
+          return { movies, newMovie, addMovie, removeMovie, showMessage, formObj };
         }
       }).mount("#mainDiv");
     </script>
