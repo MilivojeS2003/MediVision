@@ -12,9 +12,9 @@ export default{
     data(){
                 return{
                     assigments:[
-                        {name:'Finish project', complete:false, id:1},
-                        {name:'Read chapter 3', complete:false, id:2},
-                        {name:'Turn in homework', complete:false, id:3}
+                        {name:'Finish project', complete:false, tag:'math',id:1},
+                        {name:'Read chapter 3', complete:false, tag:'reading',id:2},
+                        {name:'Turn in homework', complete:false, tag:'science',id:3}
                     ],
 
                     // newAssigment:''

@@ -1,10 +1,20 @@
 export default{
     template:`
         <section v-show="assigments.filter(a => ! a.complete).length">
-            <h2 class="font-bold mb-3">{{ title }}</h2>
+        <div class="block">
+            <h2 class="font-bold mb-3">
+            {{ title }}
+             <span >({{assigments.length}})</span>
+            </h2>
+        </div>
+
+        <div class="flex gap-2">
+            <button @click="currentTag = tag" v-for="tag in tags" class="border rounded px-1 py-px text-xs mb-5">{{tag}}</button>
+        </div>
+            
             <ul>
                 <li
-                    v-for="assigment in assigments.filter(a => ! a.complete)" 
+                    v-for="assigment in fillterAssigments.filter(a => ! a.complete)" 
                     :key="assigment.id"> 
                         <label class="p-2 flex justify-between items-center">
                         {{assigment.name}} 
@@ -18,7 +28,7 @@ export default{
             <h2 class="font-bold mb-3">Completed</h2>
             <ul>
                 <li 
-                    v-for="assigment in assigments.filter(a => a.complete)" 
+                    v-for="assigment in fillterAssigments.filter(a => a.complete)" 
                     :key="assigment.id">
                         <label class="p-2 flex justify-between items-center">
                         {{assigment.name}} 
@@ -32,5 +42,25 @@ export default{
     props:{
         assigments:Array,
         title:String
+    },
+
+    data(){
+        return{ 
+        currentTag:''
+        }
+    },
+
+    computed:{
+        tags(){
+            return ['all', ...new Set(this.assigments.map(a => a.tag))]
+        },
+
+        fillterAssigments(){
+            if(this.currentTag !== '' && this.currentTag !== 'all'){
+                return this.assigments.filter(a => a.tag === this.currentTag)                
+            }else{
+                return this.assigments
+            }
+        }
     }
 }
