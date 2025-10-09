@@ -1,4 +1,8 @@
+import AssigmentTag from "./AssigmentTag.js"
+
 export default{
+    components:{ AssigmentTag },
+
     template:`
         <section v-show="assigments.filter(a => ! a.complete).length">
         <div class="block">
@@ -7,11 +11,12 @@ export default{
              <span >({{assigments.length}})</span>
             </h2>
         </div>
-
-        <div class="flex gap-2">
-            <button @click="currentTag = tag" v-for="tag in tags" class="border rounded px-1 py-px text-xs mb-5">{{tag}}</button>
-        </div>
-            
+        
+        <assigment-tag 
+            :initial-tags="assigments.map(a => a.tag)"
+            v-model:currentValue = "currentTag"
+        />
+         
             <ul>
                 <li
                     v-for="assigment in fillterAssigments.filter(a => ! a.complete)" 
@@ -46,14 +51,14 @@ export default{
 
     data(){
         return{ 
-        currentTag:''
+        currentTag:'all'
         }
     },
 
     computed:{
-        tags(){
-            return ['all', ...new Set(this.assigments.map(a => a.tag))]
-        },
+        // tags(){
+        //     return ['all', ...new Set(this.assigments.map(a => a.tag))]
+        // },
 
         fillterAssigments(){
             if(this.currentTag !== '' && this.currentTag !== 'all'){

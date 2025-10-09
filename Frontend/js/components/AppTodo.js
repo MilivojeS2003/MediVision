@@ -10,19 +10,23 @@ export default{
     `,
 
     data(){
-                return{
-                    assigments:[
-                        {name:'Finish project', complete:false, tag:'math',id:1},
-                        {name:'Read chapter 3', complete:false, tag:'reading',id:2},
-                        {name:'Turn in homework', complete:false, tag:'science',id:3}
-                    ],
+        return{
+            assigments:[],
 
-                    // newAssigment:''
+            // newAssigment:''
                 }
             },
 
-    methods:{
+    created(){
+            fetch('http://localhost:3000/assignments') // daje promise da cemo dobit odgovor
+                .then(response => response.json()) //kad ga dobijemo ocu da bude json, opet dobijamo obecanje da cemo dobit odgov u json-u
+                .then(data => { //sada dobijamo konacan odgovor u obiliku json-a
+                    // console.log(data)
+                    this.assigments = data;
+        }) 
+    },
 
+    methods:{
         add(name){
             //alert(this.newAssigment)
             this.assigments.push({
