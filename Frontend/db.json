@@ -36,5 +36,68 @@
       "id": 6,
       "tag": "science"
     }
+  ],
+
+  "employees": [
+    {
+      "id": 1,
+      "name": "Milica Jovanović",
+      "role": "Senior Product Designer",
+      "team": "UX",
+      "email": "milica@example.com",
+      "avatar": "https://i.pravatar.cc/96?img=12",
+      "skills": ["Figma", "Design Systems", "Prototyping"],
+      "bio": "Fokus na pristupačnost i brze iteracije kroz komponente.",
+      "stats": { "projects": 18, "years": 4, "rating": 4.8 },
+      "links": { "profile": "#" }
+    },
+    {
+      "id": 2,
+      "name": "Marko Petrović",
+      "role": "Backend Engineer",
+      "team": "Platform",
+      "email": "marko@example.com",
+      "avatar": "https://i.pravatar.cc/96?img=5",
+      "skills": ["Node.js", "PostgreSQL", "Docker"],
+      "bio": "Gradi skalabilne API-je i fokusira se na performanse.",
+      "stats": { "projects": 12, "years": 3, "rating": 4.6 },
+      "links": { "profile": "#" }
+    },
+    {
+      "id": 3,
+      "name": "Ana Kovač",
+      "role": "HR Manager",
+      "team": "People Ops",
+      "email": "ana@example.com",
+      "avatar": "https://i.pravatar.cc/96?img=32",
+      "skills": ["Recruiting", "Culture", "L&D"],
+      "bio": "Razvoj ljudi i zdrava organizaciona kultura.",
+      "stats": { "projects": 9, "years": 5, "rating": 4.9 },
+      "links": { "profile": "#" }
+    },
+    {
+      "id": 4,
+      "name": "Stefan Ilić",
+      "role": "Frontend Engineer",
+      "team": "Web",
+      "email": "stefan@example.com",
+      "avatar": "https://i.pravatar.cc/96?img=21",
+      "skills": ["Vue", "TypeScript", "Tailwind CSS"],
+      "bio": "Piše pristupačan i održiv UI kod.",
+      "stats": { "projects": 15, "years": 4, "rating": 4.7 },
+      "links": { "profile": "#" }
+    },
+    {
+      "id": 5,
+      "name": "Ivana Radić",
+      "role": "Data Analyst",
+      "team": "Analytics",
+      "email": "ivana@example.com",
+      "avatar": "https://i.pravatar.cc/96?img=47",
+      "skills": ["SQL", "Python", "Tableau"],
+      "bio": "Pretvara podatke u jasne uvide za timove.",
+      "stats": { "projects": 11, "years": 2, "rating": 4.5 },
+      "links": { "profile": "#" }
+    }
   ]
 }
