@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ConcatView from '../views/ContactView.vue'
+import NewView from '../views/NewView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -22,6 +23,11 @@ const router = createRouter({
       path: '/contact',
       name: 'contact',
       component: ConcatView
+    },
+    {
+      path: '/newview',
+      name: 'newView',
+      component: NewView
     },
   ],
 })
