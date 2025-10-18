@@ -1,17 +1,27 @@
-<script setup></script>
+<script setup>
+import TeamMember from '@/components/TeamMember.vue'
+import TeamFooter from '@/components/TeamFooter.vue'
+import TeamSidebar from '@/components/TeamSidebar.vue'
+import team from '@/team.json'
+
+console.log(team.length);
+
+function activeMember(team){
+    let count = 0;
+
+    for(const member of team){
+        if(member.active.toLowerCase() === 'active'){
+            count++;
+        }
+    }
+    return count
+}
+</script>
 
 <template>
   <div class="w-full min-h-screen flex bg-white text-slate-900">
     <!-- Sidebar -->
-    <aside class="w-56 bg-slate-100/80 border-r border-slate-200 px-6 py-6 flex flex-col">
-      <div class="text-2xl font-semibold tracking-wide text-slate-700">Demo</div>
-      <div class="mt-8 grid gap-4">
-        <div class="h-14 w-14 rounded-lg bg-slate-300"></div>
-        <div class="h-14 w-14 rounded-lg bg-slate-300"></div>
-        <div class="h-14 w-14 rounded-lg bg-slate-300"></div>
-        <div class="h-14 w-14 rounded-lg bg-slate-300"></div>
-      </div>
-    </aside>
+    <TeamSidebar />
 
     <!-- Main -->
     <main class="flex-1">
@@ -33,7 +43,7 @@
             </svg>
           </div>
           <div class="text-2xl font-semibold">Smiley Team</div>
-          <span class="ml-1 inline-flex items-center justify-center rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold h-5 w-5">5</span>
+          <span class="ml-1 inline-flex items-center justify-center rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold h-5 w-5">{{activeMember(team)}}</span>
         </div>
       </div>
 
@@ -47,64 +57,13 @@
           </div>
 
           <div class="mt-3 space-y-3">
-            <!-- row -->
-            <div class="grid grid-cols-12 items-center rounded-lg bg-slate-100 px-4 py-4">
-              <div class="col-span-6 flex items-center gap-4">
-                <div class="h-12 w-12 rounded-xl overflow-hidden bg-slate-300">
-                  <img class="h-full w-full object-cover" src="https://i.pravatar.cc/80?img=68" alt="James Doe" />
-                </div>
-                <div class="text-lg font-semibold">James Doe</div>
-              </div>
-              <div class="col-span-4 text-slate-600">james@doe.com</div>
-              <div class="col-span-2 font-semibold text-emerald-500">Active</div>
-            </div>
-
-            <div class="grid grid-cols-12 items-center rounded-lg bg-slate-100 px-4 py-4">
-              <div class="col-span-6 flex items-center gap-4">
-                <div class="h-12 w-12 rounded-xl overflow-hidden bg-slate-300">
-                  <img class="h-full w-full object-cover" src="https://i.pravatar.cc/80?img=32" alt="Sarah Doe" />
-                </div>
-                <div class="text-lg font-semibold">Sarah Doe</div>
-              </div>
-              <div class="col-span-4 text-slate-600">sarah@doe.com</div>
-              <div class="col-span-2 font-semibold text-emerald-500">Active</div>
-            </div>
-
-            <div class="grid grid-cols-12 items-center rounded-lg bg-slate-100 px-4 py-4">
-              <div class="col-span-6 flex items-center gap-4">
-                <div class="h-12 w-12 rounded-xl overflow-hidden bg-slate-300">
-                  <img class="h-full w-full object-cover" src="https://i.pravatar.cc/80?img=5" alt="Steven Doe" />
-                </div>
-                <div class="text-lg font-semibold">Steven Doe</div>
-              </div>
-              <div class="col-span-4 text-slate-600">steven@doe.com</div>
-              <div class="col-span-2 font-semibold text-emerald-500">Active</div>
-            </div>
-
-            <div class="grid grid-cols-12 items-center rounded-lg bg-slate-100 px-4 py-4">
-              <div class="col-span-6 flex items-center gap-4">
-                <div class="h-12 w-12 rounded-xl overflow-hidden bg-slate-300">
-                  <img class="h-full w-full object-cover" src="https://i.pravatar.cc/80?img=47" alt="Jen Doe" />
-                </div>
-                <div class="text-lg font-semibold">Jen Doe</div>
-              </div>
-              <div class="col-span-4 text-slate-600">jen@doe.com</div>
-              <div class="col-span-2 font-semibold text-emerald-500">Active</div>
-            </div>
-
-            <div class="grid grid-cols-12 items-center rounded-lg bg-slate-100 px-4 py-4">
-              <div class="col-span-6 flex items-center gap-4">
-                <div class="h-12 w-12 rounded-xl overflow-hidden bg-slate-300">
-                  <img class="h-full w-full object-cover" src="https://i.pravatar.cc/80?img=12" alt="Joe Doe" />
-                </div>
-                <div class="text-lg font-semibold">Joe Doe</div>
-              </div>
-              <div class="col-span-4 text-slate-600">joe@doe.com</div>
-              <div class="col-span-2 font-semibold text-emerald-500">Active</div>
+            <div v-for="member in team" class="grid grid-cols-12 items-center rounded-lg bg-slate-100 px-4 py-4">
+                <TeamMember :name="member.name" :email="member.email" :active="member.active" :imgId="member.imgId"></TeamMember>
             </div>
           </div>
         </div>
       </section>
+      <TeamFooter />
     </main>
   </div>
 </template>

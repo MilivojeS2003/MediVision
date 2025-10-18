@@ -1,0 +1,44 @@
+[
+  {
+    "name": "James Doe",
+    "email": "james@doe.com",
+    "active": "Active",
+    "imgId": "68"
+  },
+  {
+    "name": "Sarah Doe",
+    "email": "sarah@doe.com",
+    "active": "Active",
+    "imgId": "32"
+  },
+  {
+    "name": "Steven Doe",
+    "email": "steven@doe.com",
+    "active": "Active",
+    "imgId": "5"
+  },
+  {
+    "name": "Jen Doe",
+    "email": "jen@doe.com",
+    "active": "Active",
+    "imgId": "47"
+  },
+  {
+    "name": "Joe Doe",
+    "email": "joe@doe.com",
+    "active": "Active",
+    "imgId": "12"
+  },
+  {
+    "name": "Anna Smith",
+    "email": "anna@smith.com",
+    "active": "Inactive",
+    "imgId": "22"
+  },
+  {
+    "name": "Michael Brown",
+    "email": "michael@brown.com",
+    "active": "Active",
+    "imgId": "1"
+  }
+]
