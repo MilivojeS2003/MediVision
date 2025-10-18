@@ -1,11 +1,14 @@
 <script setup>
 import { ref, provide } from 'vue'
 import Child from '@/components/Child.vue'
+import {useCounterStore} from '@/stores/CounterStore'
 
 const username = ref('Marko') // reaktivna promenljiva
 
 // "provide" deli username svim potomcima
 provide('username', username)
+
+let counter = useCounterStore();
 
 function changeName() {
   username.value = username.value === 'Marko' ? 'Jelena' : 'Marko' //Reaktivna je promjenljiva pa se njoj pristuma sa .value
@@ -19,5 +22,8 @@ function changeName() {
     <button @click="changeName">Promijeni ime</button>
 
     <Child />
+
+    <h1>{{ counter.count }}</h1>
+    <button @click="counter.increment()">Increment</button>
   </div>
 </template>

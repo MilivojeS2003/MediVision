@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ConcatView from '../views/ContactView.vue'
 import NewView from '../views/NewView.vue'
+import Dashboard from '../views/TeamView.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -28,6 +30,11 @@ const router = createRouter({
       path: '/newview',
       name: 'newView',
       component: NewView
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard
     },
   ],
 })
