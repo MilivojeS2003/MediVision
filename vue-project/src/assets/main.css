@@ -4,10 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
-#app {
+/*#app {
   max-width: 100%;
-  margin: 0 auto;
-  padding: 2rem;
+  width:100%;
+  margin: 0 auto; */
+  /* padding: 2rem;
   font-weight: normal;
 }
 
@@ -36,4 +37,4 @@ a,
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
-}
+}*/

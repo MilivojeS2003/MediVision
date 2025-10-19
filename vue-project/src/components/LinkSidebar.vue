@@ -6,11 +6,12 @@
             isActive ? 'bg-white/15 text-white shadow-inner' : 'text-slate-100/90 hover:bg-white/10'
           ]"
         >
-          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <!-- <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M12 16V4" />
             <path d="m7 9 5-5 5 5" />
             <path d="M4 20h16" />
-          </svg>
+          </svg> -->
+          <slot name="icon"></slot>
           <span class="font-medium">{{name}}</span>
         </div>
         </RouterLink>
