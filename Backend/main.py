@@ -1,25 +1,56 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-import os
-
-
+from fastapi import FastAPI, HTTPException, Depends
+from pydantic import BaseModel
+from typing import List, Annotated
+import models
+from database import engine,SessionLocal
+from sqlalchemy.orm import Session
+import auth
 
 app = FastAPI()
+app.include_router(auth.router)
+models.Base.metadata.create_all(bind=engine)
 
-# abspath -> uzima putanju main.py, dirname sa putanje skida fajl, jos jedan dirname sa putanje skida Backend folde i dobijamo: C:\Users\KORISNIK\Desktop\MediVision AI
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+class ChoiceBase(BaseModel):
+    choice_text: str
+    is_correct:bool
 
-templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "Frontend", "templates"))
-app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "Frontend", "static")), name="static")
-print(f'OVO JE RUTA:{templates}')
+class QuestionBase(BaseModel):
+    question_text:str
+    choices: List[ChoiceBase]
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+def get_db():
+    db: Session = SessionLocal() 
+    try:
+        yield db
+    finally:
+        db.close()
 
+db_dependency = Annotated[Session, Depends(get_db)]
 
-@app.get("/login", response_class=HTMLResponse)
-async def login(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+@app.post("/question/")
+def create_question(question: QuestionBase, db:db_dependency):
+    db_question = models.Questions(question_text = question.question_text)
+    db.add(db_question)
+    db.commit()
+    db.flush()
+
+    for choice in question.choices:
+        db_choice = models.Choices(choice_text = choice.choice_text, is_correct = choice.is_correct, question_id = db_question.id)
+        db.add(db_choice)
+    db.commit()
+    db.refresh(db_question)
+    return {"message": "Question created successfully", "question_id": db_question.id}
+
+@app.get("/question/{question_id}")
+def read_question(question_id:int, db:db_dependency):
+    result = db.query(models.Questions).filter(models.Questions.id == question_id).first()
+    if not result:
+        raise HTTPException(status_code=404, details='Question is not found')
+    return result
+
+@app.get("/question/")
+def read_all_question(db:db_dependency):
+    result = db.query(models.Questions).all()
+    if not result:
+        raise HTTPException(status_code=404, details='Question is not found')
+    return result
