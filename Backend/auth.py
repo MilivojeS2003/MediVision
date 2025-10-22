@@ -9,6 +9,7 @@ from models import Users,Roles
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from jose import jwt, JWTError
+from database import db_dependency
 
 
 router = APIRouter(
@@ -24,36 +25,11 @@ bcrypt_context = CryptContext(schemes = ['bcrypt_sha256'], deprecated = 'auto')
 
 oauth_bearer = OAuth2PasswordBearer(tokenUrl = 'auth/token')
 
-class CreateUserRequest(BaseModel):
-    username:str
-    password:str
-    email:str
-    role:str
 
 class Token(BaseModel):
     access_token:str
     token_type:str
 
-def get_db():
-    db: Session = SessionLocal() 
-    try:
-        yield db
-    finally:
-        db.close()
-
-db_dependency = Annotated[Session, Depends(get_db)]
-
-@router.post('/' , status_code= status.HTTP_201_CREATED)
-def create_user(db: db_dependency, create_user_request:CreateUserRequest):
-    roles = db.query(Roles).all()
-    roles = [r.role for r in roles]
-    print(f'OVO SU SVE ROLE: {roles}')
-    if create_user_request.role not in roles:
-        raise HTTPException(status_code=401, detail="Invalid role")
-    
-    create_user_model = Users(username = create_user_request.username,email = create_user_request.email, role = create_user_request.role, hashed_password = bcrypt_context.hash(create_user_request.password))
-    db.add(create_user_model)
-    db.commit()
 
 
 @router.post("/token", response_model=Token)

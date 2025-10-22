@@ -5,10 +5,12 @@ import models
 from database import engine,SessionLocal
 from sqlalchemy.orm import Session
 import auth
+import user
 from auth import get_current_user
 
 app = FastAPI()
 app.include_router(auth.router)
+app.include_router(user.router)
 models.Base.metadata.create_all(bind=engine)
 
 class ChoiceBase(BaseModel):
