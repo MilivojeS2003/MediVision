@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Annotated
 import models
@@ -6,11 +7,17 @@ from database import engine,SessionLocal
 from sqlalchemy.orm import Session
 import auth
 import user
+import product
+import upload
 from auth import get_current_user
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 app.include_router(auth.router)
 app.include_router(user.router)
+app.include_router(product.router)
+app.include_router(upload.router)
 models.Base.metadata.create_all(bind=engine)
 
 class ChoiceBase(BaseModel):

@@ -33,3 +33,17 @@ class Roles(Base):
     id = Column(Integer, primary_key = True, index = True)
     role = Column(String,unique=True)
 
+
+class Products(Base):
+    __tablename__ = 'products'
+
+    id = Column(Integer, primary_key = True, index = True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    title = Column(String)
+    description = Column(String)
+    canonical_sku = Column(String)
+    created_at = Column(DateTime, default=datetime.now)
+
+
+
+

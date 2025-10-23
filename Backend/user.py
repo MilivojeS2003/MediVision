@@ -4,6 +4,7 @@ from models import Users,Roles
 from database import db_dependency
 from pydantic import BaseModel
 from passlib.context import CryptContext
+from auth import get_current_user
 
 
 router = APIRouter(
@@ -30,3 +31,11 @@ def create_user(db: db_dependency, create_user_request:CreateUserRequest):
     create_user_model = Users(username = create_user_request.username,email = create_user_request.email, role = create_user_request.role, hashed_password = bcrypt_context.hash(create_user_request.password))
     db.add(create_user_model)
     db.commit()
+
+@router.get('/', status_code = status.HTTP_200_OK)
+def read_current_user(db: db_dependency, current_user = Depends(get_current_user)):
+    if not current_user:
+        raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="Invalid Authorized")
+    print(current_user)
+    user_info = db.query(Users).filter(Users.id == current_user['user_id']).first()
+    return user_info
