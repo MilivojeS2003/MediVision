@@ -32,3 +32,12 @@ async def home(request: Request):
     documents = supabase.storage.from_(SUPABASE_BUCKET).list()
     print(f'OVO JE DOCUMENT: {documents}')
     return templates.TemplateResponse("home.html", {"request": request, "documents": documents})
+
+@router.get("/uploadDoc", response_class=HTMLResponse)
+async def upload_page(request: Request):
+    return templates.TemplateResponse("uploadImages.html", {"request": request})
+
+@router.get('/document/{doc_name}')
+async def get_document(doc_name:str):
+    doc_url = supabase.storage.from_(SUPABASE_BUCKET).get_public_url(doc_name)
+    return doc_url

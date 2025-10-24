@@ -1,12 +1,26 @@
-<!-- templates/home.html -->
 {% extends "base.html" %}
 {% block content %}
 <h2 class="mb-4">Available Videos</h2>
-{% if videos %}
+{% if documents %}
 <ul class="list-group">
-    {% for video in videos %}
-    <li class="list-group-item">
-        <a href="/watch/{{ video.name }}">{{ video.name }}</a>
+    {% for doc in documents %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="#">{{ doc.name }}</a>
+
+        <div>
+            <!-- View -->
+            <a href="/documents/{{ doc.id }}/view" class="btn btn-sm btn-outline-primary me-1" title="View">
+                <i class="bi bi-eye"></i>
+            </a>
+            <!-- Save -->
+            <a href="/documents/{{ doc.id }}/save" class="btn btn-sm btn-outline-success me-1" title="Save">
+                <i class="bi bi-save"></i>
+            </a>
+            <!-- Delete -->
+            <a href="/documents/{{ doc.id }}/delete" class="btn btn-sm btn-outline-danger" title="Delete">
+                <i class="bi bi-trash"></i>
+            </a>
+        </div>
     </li>
     {% endfor %}
 </ul>
@@ -14,3 +28,4 @@
 <p>No videos available. Be the first to <a href="/upload">upload</a> one!</p>
 {% endif %}
 {% endblock %}
+

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h4 class="card-title mb-3">Upload proizvoda</h4>
+
+        <!-- Jedna forma: fajlovi + polja -->
+        <form id="uploadForm" method="post" action="/upload" enctype="multipart/form-data" novalidate>
+
+          <div class="mb-3">
+            <label for="product_name" class="form-label">Naziv proizvoda</label>
+            <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Majica Basic" required>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="product_colors" class="form-label">Boje (odvojene zarezom)</label>
+              <input type="text" class="form-control" id="product_colors" name="product_colors" placeholder="Crvena, Plava, Bela">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="product_sizes" class="form-label">Veličine (odvojene zarezom)</label>
+              <input type="text" class="form-control" id="product_sizes" name="product_sizes" placeholder="S, M, L, XL">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="product_description" class="form-label">Kratak opis</label>
+            <textarea class="form-control" id="product_description" name="product_description" rows="3" placeholder="Dodatni detalji..."></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="product_images" class="form-label">Izaberi slike (max 8, svaki do 8MB)</label>
+            <input class="form-control" type="file" id="product_images" name="product_images" accept="image/*" multiple required>
+            <div class="form-text">Preporučeno: frontalne fotografije na beloj pozadini.</div>
+          </div>
+
+          <!-- preview thumbnails -->
+          <div id="thumbs" class="mb-3 d-flex flex-wrap gap-2"></div>
+
+          <div class="mb-3">
+            <label for="generated_prompt" class="form-label">Generisani prompt (možeš editovati)</label>
+            <textarea class="form-control" id="generated_prompt" name="generated_prompt" rows="3" readonly></textarea>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-outline-secondary" onclick="generatePrompt()">Generiši prompt</button>
+            <button type="submit" class="btn btn-primary">Pošalji i započni obradu</button>
+            <button type="button" class="btn btn-light ms-auto" onclick="resetForm()">Reset</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- feedback area -->
+    <div id="alerts"></div>
+  </div>
+</div>
+{% endblock content %}
