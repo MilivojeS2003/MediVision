@@ -1,74 +1,44 @@
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
-from typing import List, Annotated
+from typing import Annotated
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+
+app = FastAPI()
+
+# PRVO montiraj static - na samom početku!
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
+
+# ZATIM importuj module (neki od njih mogu koristiti templates)
 import models
-from database import engine,SessionLocal
-from sqlalchemy.orm import Session
+from database import engine, db_dependency
 import auth
 import user
 import product
 import upload
 from auth import get_current_user
 
-app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# Kreiraj tabele
+models.Base.metadata.create_all(bind=engine)
 
+# Registruj routere
 app.include_router(auth.router)
 app.include_router(user.router)
 app.include_router(product.router)
 app.include_router(upload.router)
-models.Base.metadata.create_all(bind=engine)
 
-class ChoiceBase(BaseModel):
-    choice_text: str
-    is_correct:bool
+# Debug: ispisi sve rute
+print("\n--- Sve rute ---")
+for r in app.routes:
+    print(f"name: {getattr(r, 'name', None)}, path: {getattr(r, 'path', None)}")
+print("--- Kraj ruta ---\n")
 
-class QuestionBase(BaseModel):
-    question_text:str
-    choices: List[ChoiceBase]
-
-def get_db():
-    db: Session = SessionLocal() 
-    try:
-        yield db
-    finally:
-        db.close()
-
-db_dependency = Annotated[Session, Depends(get_db)]
+# Dependency
 user_dependency = Annotated[dict, Depends(get_current_user)]
 
 @app.get("/")
-def user(user:user_dependency, db:db_dependency):
+def user(user: user_dependency, db: db_dependency):
     if user is None:
-        raise HTTPException(status_code=401, details='Not Autharization')
-    return {"user":user}
-
-
-@app.post("/question/")
-def create_question(question: QuestionBase, db:db_dependency):
-    db_question = models.Questions(question_text = question.question_text)
-    db.add(db_question)
-    db.commit()
-    db.flush()
-
-    for choice in question.choices:
-        db_choice = models.Choices(choice_text = choice.choice_text, is_correct = choice.is_correct, question_id = db_question.id)
-        db.add(db_choice)
-    db.commit()
-    db.refresh(db_question)
-    return {"message": "Question created successfully", "question_id": db_question.id}
-
-@app.get("/question/{question_id}")
-def read_question(question_id:int, db:db_dependency):
-    result = db.query(models.Questions).filter(models.Questions.id == question_id).first()
-    if not result:
-        raise HTTPException(status_code=404, details='Question is not found')
-    return result
-
-@app.get("/question/")
-def read_all_question(db:db_dependency):
-    result = db.query(models.Questions).all()
-    if not result:
-        raise HTTPException(status_code=404, details='Question is not found')
-    return result
+        raise HTTPException(status_code=401, detail='Not Authorized')
+    return {"user": user}
