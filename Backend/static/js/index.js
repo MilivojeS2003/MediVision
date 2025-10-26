@@ -48,3 +48,59 @@ function resetForm() {
   document.getElementById('generated_prompt').readOnly = true;
 }
 
+// Preview thumbnails za izabrane slike
+document.getElementById('product_images').addEventListener('change', function(e) {
+  const thumbsContainer = document.getElementById('thumbs');
+  thumbsContainer.innerHTML = ''; // očisti prethodne thumbnails
+
+  const files = e.target.files;
+
+  // Provera broja fajlova
+  if (files.length > 8) {
+    alert('Maksimalno možete uploadovati 8 slika!');
+    this.value = '';
+    return;
+  }
+
+  // Provera veličine fajlova i kreiranje preview-a
+  Array.from(files).forEach((file, index) => {
+    // Provera veličine (8MB = 8 * 1024 * 1024 bytes)
+    if (file.size > 8 * 1024 * 1024) {
+      alert(`Slika "${file.name}" je veća od 8MB!`);
+      this.value = '';
+      thumbsContainer.innerHTML = '';
+      return;
+    }
+
+    // Kreiraj thumbnail
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const img = document.createElement('img');
+      img.src = event.target.result;
+      img.style.width = '100px';
+      img.style.height = '100px';
+      img.style.objectFit = 'cover';
+      img.style.borderRadius = '8px';
+      img.style.border = '2px solid #dee2e6';
+      img.title = file.name;
+      thumbsContainer.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
+
+// Submit forme (opciono - ako želiš AJAX umesto standardnog POST-a)
+document.getElementById('uploadForm').addEventListener('submit', function(e) {
+  // Proveri da li je prompt generisan
+  const prompt = document.getElementById('generated_prompt').value.trim();
+  
+  if (!prompt) {
+    e.preventDefault();
+    alert('Molimo prvo generišite prompt klikom na "Generiši prompt" dugme!');
+    return;
+  }
+
+  // Ovde može ići AJAX logika ako želiš, ili pusti standardni submit
+  console.log('Forma se šalje...');
+});
