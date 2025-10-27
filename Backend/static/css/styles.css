@@ -184,3 +184,11 @@ footer {
 .mb-5 { margin-bottom: 3rem; }
 
 .text-center { text-align: center; }
+
+.img-fluid {
+  max-width: 100%;
+}
+.card img {
+  height: 160px;
+  object-fit: cover;
+}

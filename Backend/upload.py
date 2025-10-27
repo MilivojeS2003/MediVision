@@ -25,15 +25,29 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 @router.get('/', response_class=HTMLResponse)
 async def home(request: Request):
-    documents = supabase.storage.from_(SUPABASE_BUCKET).list()
+    # documents = supabase.storage.from_(SUPABASE_BUCKET).list()
+    # return templates.TemplateResponse("home.html", {"request": request, "documents": documents})
+    docs = supabase.storage.from_(SUPABASE_BUCKET).list()
+    documents = []
+    for d in docs:
+        public_url = supabase.storage.from_(SUPABASE_BUCKET).get_public_url(d["name"])
+        documents.append({
+            "id": d["id"] if "id" in d else d["name"],
+            "name": d["name"],
+            "url": public_url
+        })
     return templates.TemplateResponse("home.html", {"request": request, "documents": documents})
 
 @router.get("/uploadDoc", response_class=HTMLResponse)
 async def upload_page(request: Request):
     return templates.TemplateResponse("uploadImages.html", {"request": request})
 
-@router.get('/documents')
-async def get_document(request: Request):
+@router.get('/documents/{document_name}')
+async def get_document(document_name:str,request: Request):
     #doc_url = supabase.storage.from_(SUPABASE_BUCKET).get_public_url(doc_name)
-    return templates.TemplateResponse("document.html", {"request": request})
+    document_url =  supabase.storage.from_(SUPABASE_BUCKET).get_public_url(document_name)
+
+    if not document_url:
+        return {'error': 'document is not found'}
+    return {'url_document':{f'{document_url}'}}
 

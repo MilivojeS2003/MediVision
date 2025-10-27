@@ -46,7 +46,7 @@
 
           <div class="d-flex gap-2">
             <button type="button" class="btn btn-outline-secondary" onclick="generatePrompt()">Generiši prompt</button>
-            <button type="submit" class="btn btn-primary">Pošalji i započni obradu</button>
+            <button type="submit" class="btn btn-primary" onclick="sendForm(event)">Pošalji i započni obradu</button>
             <button type="button" class="btn btn-light ms-auto" onclick="resetForm()">Reset</button>
           </div>
         </form>
@@ -58,3 +58,7 @@
   </div>
 </div>
 {% endblock content %}
+
+{% block scripts %}
+    <script src="/static/js/index.js"></script>
+{% endblock %}

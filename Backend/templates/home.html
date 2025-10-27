@@ -8,10 +8,15 @@
         <a href="#">{{ doc.name }}</a>
 
         <div>
-            <!-- View -->
-            <a href="/documents/{{ doc.id }}/view" class="btn btn-sm btn-outline-primary me-1" title="View">
+            <!-- View — ovo je sada dugme koje sadrži data-url sa javnim URL-om slike -->
+            <button type="button"
+                    class="btn btn-sm btn-outline-primary me-1 btn-preview"
+                    title="Preview"
+                    data-url="{{ doc.url }}"
+                    data-name="{{ doc.name|e }}">
                 <i class="bi bi-eye"></i>
-            </a>
+            </button>
+
             <!-- Save -->
             <a href="/documents/{{ doc.id }}/save" class="btn btn-sm btn-outline-success me-1" title="Save">
                 <i class="bi bi-save"></i>
@@ -29,3 +34,6 @@
 {% endif %}
 {% endblock %}
 
+{% block scripts %}
+    <script src="/static/js/home.js"></script>
+{% endblock %}

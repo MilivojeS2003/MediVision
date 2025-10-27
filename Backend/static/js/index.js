@@ -89,18 +89,30 @@ document.getElementById('product_images').addEventListener('change', function(e)
   });
 });
 
-
-// Submit forme (opciono - ako želiš AJAX umesto standardnog POST-a)
-document.getElementById('uploadForm').addEventListener('submit', function(e) {
-  // Proveri da li je prompt generisan
+function sendForm(e) {
+  e.preventDefault(); 
+  
   const prompt = document.getElementById('generated_prompt').value.trim();
+    console.log('1. Forma se šalje...');
+
   
   if (!prompt) {
-    e.preventDefault();
-    alert('Molimo prvo generišite prompt klikom na "Generiši prompt" dugme!');
+    Swal.fire({
+    title: "Forma poslata!",
+    icon: "success",
+    draggable: true
+  })
     return;
   }
+    
+  console.log('2. Forma se šalje...');
+  
+  Swal.fire({
+    title: "Forma poslata!",
+    icon: "success",
+    draggable: true
+  }).then(() => {
+    console.log('2. Korisnik zatvorio alert');
+  });
+}
 
-  // Ovde može ići AJAX logika ako želiš, ili pusti standardni submit
-  console.log('Forma se šalje...');
-});
