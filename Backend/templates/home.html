@@ -18,9 +18,10 @@
             </button>
 
             <!-- Save -->
-            <a href="/documents/{{ doc.id }}/save" class="btn btn-sm btn-outline-success me-1" title="Save">
+            <a href="{{ doc.url }}" class="btn btn-sm btn-outline-success me-1" title="Save">
                 <i class="bi bi-save"></i>
             </a>
+
             <!-- Delete -->
             <a href="/documents/{{ doc.id }}/delete" class="btn btn-sm btn-outline-danger" title="Delete">
                 <i class="bi bi-trash"></i>
@@ -35,5 +36,6 @@
 {% endblock %}
 
 {% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
     <script src="/static/js/home.js"></script>
 {% endblock %}

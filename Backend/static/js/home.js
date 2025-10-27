@@ -51,3 +51,36 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Selektujemo sve "Save" dugmiće
+    const saveButtons = document.querySelectorAll(".btn-outline-success");
+
+    saveButtons.forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+            e.preventDefault(); // Sprečava default ponašanje linka
+
+            // Dohvatamo URL fajla sa href atributa
+            const fileUrl = btn.getAttribute("href");
+            if (!fileUrl) return;
+
+            // Kreiramo ime fajla iz URL-a
+            const fileName = fileUrl.split("/").pop() || "file";
+
+            try {
+                // Preuzimamo fajl kao blob
+                const response = await fetch(fileUrl);
+                if (!response.ok) throw new Error("Greška pri preuzimanju fajla");
+                const blob = await response.blob();
+
+                // Koristimo FileSaver.js da sačuvamo fajl
+                saveAs(blob, fileName);
+                console.log(`OVO JE BLOB:${blob} A OVO JE FILENAME: ${fileName}`);
+            } catch (err) {
+                console.error("Neuspešno preuzimanje:", err);
+            }
+        });
+    });
+});
+
