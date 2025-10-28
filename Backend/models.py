@@ -39,11 +39,15 @@ class Products(Base):
 
     id = Column(Integer, primary_key = True, index = True)
     user_id = Column(Integer, ForeignKey("users.id"))
-    title = Column(String)
+    name = Column(String)
+    size = Column(String)
     description = Column(String)
-    canonical_sku = Column(String)
+    color = Column(String)
     created_at = Column(DateTime, default=datetime.now)
-
+    status = Column(String, default="Active")
+    price = Column(String)
+    curreny = Column(String)
+    stockQuality = Column(Integer, default = 1)
 
 
 

@@ -25,6 +25,22 @@
             </div>
           </div>
 
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="product_price" class="form-label">Cijena</label>
+              <input type="number" step="0.01" min="0" class="form-control" id="product_price" name="product_price" placeholder="99.99" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="product_currency" class="form-label">Valuta</label>
+              <select class="form-select" id="product_currency" name="product_currency" required>
+                <option value="EUR" selected>EUR</option>
+                <option value="USD">USD</option>
+                <option value="RSD">RSD</option>
+                <option value="GBP">GBP</option>
+              </select>
+            </div>
+          </div>
+
           <div class="mb-3">
             <label for="product_description" class="form-label">Kratak opis</label>
             <textarea class="form-control" id="product_description" name="product_description" rows="3" placeholder="Dodatni detalji..."></textarea>

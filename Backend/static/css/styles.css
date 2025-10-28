@@ -10,17 +10,25 @@
 /* Typography */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa; /* Light gray background */
-    color: #212529; /* Bootstrap's default text color */
+    background-color: #083159;
+    /* Light gray background */
+    color: #212529;
+    /* Bootstrap's default text color */
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin-bottom: 1rem;
 }
 
 /* Navbar */
 .navbar {
-    background-color: #343a40; /* Dark background */
+    background-color: #343a40;
+    /* Dark background */
     padding: 1rem;
     color: #fff;
     display: flex;
@@ -45,7 +53,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar-nav a:hover {
-    color: #adb5bd; /* Lighter gray on hover */
+    color: #adb5bd;
+    /* Lighter gray on hover */
 }
 
 /* Container */
@@ -62,7 +71,8 @@ h1, h2, h3, h4, h5, h6 {
 .btn {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background-color: #0d6efd; /* Bootstrap primary color */
+    background-color: #0d6efd;
+    /* Bootstrap primary color */
     color: #fff;
     text-decoration: none;
     border: none;
@@ -73,11 +83,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn:hover {
-    background-color: #0b5ed7; /* Slightly darker on hover */
+    background-color: #0b5ed7;
+    /* Slightly darker on hover */
 }
 
 .btn-secondary {
-    background-color: #6c757d; /* Bootstrap secondary color */
+    background-color: #6c757d;
+    /* Bootstrap secondary color */
 }
 
 .btn-secondary:hover {
@@ -100,7 +112,8 @@ h1, h2, h3, h4, h5, h6 {
 .form-group textarea {
     width: 100%;
     padding: 0.5rem;
-    border: 1px solid #ced4da; /* Light gray border */
+    border: 1px solid #ced4da;
+    /* Light gray border */
     border-radius: 0.25rem;
     font-size: 1rem;
 }
@@ -171,24 +184,134 @@ footer {
 }
 
 /* Utility Classes */
-.mt-1 { margin-top: 0.25rem; }
-.mt-2 { margin-top: 0.5rem; }
-.mt-3 { margin-top: 1rem; }
-.mt-4 { margin-top: 1.5rem; }
-.mt-5 { margin-top: 3rem; }
+.mt-1 {
+    margin-top: 0.25rem;
+}
 
-.mb-1 { margin-bottom: 0.25rem; }
-.mb-2 { margin-bottom: 0.5rem; }
-.mb-3 { margin-bottom: 1rem; }
-.mb-4 { margin-bottom: 1.5rem; }
-.mb-5 { margin-bottom: 3rem; }
+.mt-2 {
+    margin-top: 0.5rem;
+}
 
-.text-center { text-align: center; }
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.mt-5 {
+    margin-top: 3rem;
+}
+
+.mb-1 {
+    margin-bottom: 0.25rem;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.mb-5 {
+    margin-bottom: 3rem;
+}
+
+.text-center {
+    text-align: center;
+}
 
 .img-fluid {
-  max-width: 100%;
+    max-width: 100%;
 }
+
 .card img {
-  height: 160px;
-  object-fit: cover;
+    height: 160px;
+    object-fit: cover;
+}
+
+
+/*  ---------- LOGIN DIO ---------- */
+
+.auth-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.auth-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+.auth-body {
+    padding: 40px;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    padding: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 25px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.divider span {
+    padding: 0 15px;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.social-btn {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 2px solid #dee2e6;
+    background: white;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.social-btn:hover {
+    border-color: #667eea;
+    background: #f8f9fa;
+    transform: translateY(-2px);
+}
+
+.alert {
+    border-radius: 10px;
 }

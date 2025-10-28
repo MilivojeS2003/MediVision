@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h2 class="mb-2"><i class="bi bi-shop"></i> ShopAI</h2>
+                        <p class="mb-0">Dobrodošli nazad!</p>
+                    </div>
+                    
+                    <div class="auth-body">
+                        {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            {{ error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endif %}
+
+                        <form method="POST" action="{{ url_for('login') }}">
+                            {% if form %}
+                                {{ form.username }}
+                                {{ form.password }}
+                            {% endif %}
+                            
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email adresa</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" class="form-control" id="email" name="email" 
+                                           placeholder="vas@email.com" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Lozinka</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <input type="password" class="form-control" id="password" name="password" 
+                                           placeholder="••••••••" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 d-flex justify-content-between align-items-center">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                    <label class="form-check-label" for="remember">
+                                        Zapamti me
+                                    </label>
+                                </div>
+                                <a href="" class="text-decoration-none">
+                                    Zaboravili ste lozinku?
+                                </a>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 mb-3">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Prijavi se
+                            </button>
+                        </form>
+
+                        <div class="divider">
+                            <span>ili se prijavite sa</span>
+                        </div>
+
+                        <button class="btn social-btn">
+                            <i class="bi bi-google me-2"></i>Google
+                        </button>
+                        <button class="btn social-btn">
+                            <i class="bi bi-facebook me-2"></i>Facebook
+                        </button>
+
+                        <div class="text-center mt-4">
+                            <p class="text-muted">
+                                Nemate nalog? 
+                                <a href="" class="text-decoration-none fw-bold">
+                                    Registrujte se
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

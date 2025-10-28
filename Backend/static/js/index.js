@@ -3,13 +3,17 @@ function getFormInput(){
   const productColors = document.getElementById('product_colors').value.trim();
   const productSizes = document.getElementById('product_sizes').value.trim();
   const productDescription = document.getElementById('product_description').value.trim();
+  const productPrice = document.getElementById('product_price').value
+  const productCurrency = document.getElementById('product_currency').value
   const productImages = document.getElementById('product_images').files;
 
   return {
     'product_name':productName,
     'product_color':productColors,
     'product_size':productSizes,
-    'product_descriptiona': productDescription,
+    'product_description': productDescription,
+    'product_price' : productPrice,
+    'product_currency':productCurrency,
     'product_images': productImages
   }
 }
@@ -38,9 +42,13 @@ function generatePrompt() {
     prompt += `\nDostupne veličine: ${product_info.product_size}`;
   }
 
-  if (product_info.product_descriptiona) {
-    prompt += `\nOpis: ${product_info.product_descriptiona}`;
+  if (product_info.product_description) {
+    prompt += `\nOpis: ${product_info.product_description}`;
   }
+
+  if(product_info.product_price){
+    prompt += `\nCijena: ${product_info.product_price} ${product_info.product_currency}`;
+}
   
   prompt += `\nBroj slika: ${product_info.product_images.length}`;
   prompt += `\nZahtevi: visok kvalitet, bela pozadina, profesionalno osvetljenje, jasna prezentacija proizvoda`;
@@ -111,12 +119,15 @@ async function sendForm(e) {
 
   // Dodaj sva tekstualna polja
   for (const [key, value] of Object.entries(data)) {
-    if (key !== 'product_images') { // fajlovi posebno
+    console.log(key,value);
+    if (key !== 'product_images') { 
       product_info.append(key, value);
     }
   }
 
-  // Dodaj slike (ako ih ima)
+  product_info.append('prompt', prompt)
+
+
   if (data.product_images && data.product_images.length > 0) {
     for (const file of data.product_images) {
       product_info.append('product_images', file); // višestruke slike
@@ -125,7 +136,7 @@ async function sendForm(e) {
 
   console.log(`OVO JE PRODUCT INFO: ${product_info}`);
   try{
-    const res = await fetch('/upload/postData', {
+    const res = await fetch('/product/create', {
       method:'POST',
       body: product_info
     })

@@ -1,6 +1,6 @@
 from datetime import timedelta, datetime
 from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from starlette import status
@@ -10,6 +10,8 @@ from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from jose import jwt, JWTError
 from database import db_dependency
+from core import templates  
+
 
 
 router = APIRouter(
@@ -68,3 +70,23 @@ def get_current_user(token: Annotated[str, Depends(oauth_bearer)]): #token je st
         return {'username':username, 'user_id':user_id}
     except JWTError:
         raise HTTPException(status_code=401, details='Could not validate user')
+    
+
+@router.get('/login')
+def login(request: Request):
+    # if request.method == 'POST':
+    #     email = request.form.get('email')
+    #     password = request.form.get('password')
+    #     # Tvoja logika za autentifikaciju
+        #return redirect(url_for('dashboard'))
+    return templates.TemplateResponse("login.html", {"request": request})
+
+
+@router.get('/signup')
+def login(request: Request):
+    # if request.method == 'POST':
+    #     email = request.form.get('email')
+    #     password = request.form.get('password')
+    #     # Tvoja logika za autentifikaciju
+        #return redirect(url_for('dashboard'))
+    return templates.TemplateResponse("signup.html", {"request": request})

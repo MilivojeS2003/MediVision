@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+   <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h2 class="mb-2"><i class="bi bi-shop"></i> ShopAI</h2>
+                        <p class="mb-0">Kreirajte svoj nalog</p>
+                    </div>
+                    
+                    <div class="auth-body">
+                        {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            {{ error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endif %}
+
+                        <form method="POST" action="" id="signupForm">
+                            {% if form %}
+                                {{ form.username }}
+                                {{ form.password }}
+                            {% endif %}
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="first_name" class="form-label">Ime</label>
+                                    <input type="text" class="form-control" id="first_name" name="first_name" 
+                                           placeholder="Marko" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="last_name" class="form-label">Prezime</label>
+                                    <input type="text" class="form-control" id="last_name" name="last_name" 
+                                           placeholder="Marković" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email adresa</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" class="form-control" id="email" name="email" 
+                                           placeholder="vas@email.com" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="business_name" class="form-label">Naziv biznisa (opciono)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-shop-window"></i></span>
+                                    <input type="text" class="form-control" id="business_name" name="business_name" 
+                                           placeholder="Moja Prodavnica">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Lozinka</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <input type="password" class="form-control" id="password" name="password" 
+                                           placeholder="••••••••" required minlength="8">
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="password-strength" id="strengthBar"></div>
+                                <small class="text-muted">Minimum 8 karaktera</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="confirm_password" class="form-label">Potvrdite lozinku</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                    <input type="password" class="form-control" id="confirm_password" 
+                                           name="confirm_password" placeholder="••••••••" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    Slažem se sa <a href="#" class="text-decoration-none">Uslovima korišćenja</a> 
+                                    i <a href="#" class="text-decoration-none">Politikom privatnosti</a>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 mb-3">
+                                <i class="bi bi-person-plus me-2"></i>Kreiraj nalog
+                            </button>
+                        </form>
+
+                        <div class="divider">
+                            <span>ili se registrujte sa</span>
+                        </div>
+
+                        <button class="btn social-btn">
+                            <i class="bi bi-google me-2"></i>Google
+                        </button>
+                        <button class="btn social-btn">
+                            <i class="bi bi-facebook me-2"></i>Facebook
+                        </button>
+
+                        <div class="text-center mt-4">
+                            <p class="text-muted">
+                                Već imate nalog? 
+                                <a href="" class="text-decoration-none fw-bold">
+                                    Prijavite se
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock content %}
