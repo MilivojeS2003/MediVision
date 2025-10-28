@@ -1,36 +1,48 @@
-function generatePrompt() {  
+function getFormInput(){
   const productName = document.getElementById('product_name').value.trim();
   const productColors = document.getElementById('product_colors').value.trim();
   const productSizes = document.getElementById('product_sizes').value.trim();
   const productDescription = document.getElementById('product_description').value.trim();
   const productImages = document.getElementById('product_images').files;
+
+  return {
+    'product_name':productName,
+    'product_color':productColors,
+    'product_size':productSizes,
+    'product_descriptiona': productDescription,
+    'product_images': productImages
+  }
+}
+
+function generatePrompt() {  
+  product_info = getFormInput()
   
-  if (!productName) {
+  if (!product_info.product_name) {
     alert('Molimo unesite naziv proizvoda!');
     return;
   }
 
-  if (productImages.length === 0) {
+  if (product_info.product_images.length === 0) {
     alert('Molimo izaberite barem jednu sliku!');
     return;
   }
 
   // Kreiraj prompt
-  let prompt = `Kreiranje profesionalnih produktnih fotografija za: ${productName}`;
+  let prompt = `Kreiranje profesionalnih produktnih fotografija za: ${product_info[product_name]}`;
 
-  if (productColors) {
-    prompt += `\nDostupne boje: ${productColors}`;
+  if (product_info.prosuct_color) {
+    prompt += `\nDostupne boje: ${product_info.prosuct_color}`;
   }
 
-  if (productSizes) {
-    prompt += `\nDostupne veličine: ${productSizes}`;
+  if (product_info.product_size) {
+    prompt += `\nDostupne veličine: ${product_info.product_size}`;
   }
 
-  if (productDescription) {
-    prompt += `\nOpis: ${productDescription}`;
+  if (product_info.product_descriptiona) {
+    prompt += `\nOpis: ${product_info.product_descriptiona}`;
   }
   
-  prompt += `\nBroj slika: ${productImages.length}`;
+  prompt += `\nBroj slika: ${product_info.product_images.length}`;
   prompt += `\nZahtevi: visok kvalitet, bela pozadina, profesionalno osvetljenje, jasna prezentacija proizvoda`;
 
   // Popuni textarea sa generisanim promptom
@@ -89,30 +101,67 @@ document.getElementById('product_images').addEventListener('change', function(e)
   });
 });
 
-function sendForm(e) {
+
+async function sendForm(e) {
   e.preventDefault(); 
   
   const prompt = document.getElementById('generated_prompt').value.trim();
-    console.log('1. Forma se šalje...');
+  const data =  getFormInput();
+  let product_info = new FormData();
 
-  
-  if (!prompt) {
-    Swal.fire({
-    title: "Forma poslata!",
-    icon: "success",
-    draggable: true
-  })
-    return;
+  // Dodaj sva tekstualna polja
+  for (const [key, value] of Object.entries(data)) {
+    if (key !== 'product_images') { // fajlovi posebno
+      product_info.append(key, value);
+    }
   }
-    
-  console.log('2. Forma se šalje...');
+
+  // Dodaj slike (ako ih ima)
+  if (data.product_images && data.product_images.length > 0) {
+    for (const file of data.product_images) {
+      product_info.append('product_images', file); // višestruke slike
+    }
+  }
+
+  console.log(`OVO JE PRODUCT INFO: ${product_info}`);
+  try{
+    const res = await fetch('/upload/postData', {
+      method:'POST',
+      body: product_info
+    })
+
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(`Server error ${res.status}: ${errText}`);
+    }
+
+    const json = await res.json();
+    console.log('Upload success:', json);
+
+  }catch(err){
+    console.error('Upload failed:', err);
+    alert('Greška pri uploadu: ' + err.message);
+  }
+
+  // console.log('1️ Forma se šalje...');
+
+  // if (!prompt) {
+  //   Swal.fire({
+  //     title: "Forma poslata!",
+  //     icon: "success",
+  //     draggable: true
+  //   });
+  //   return;
+  // }
+
+  // console.log('2️ Forma se šalje...');
   
-  Swal.fire({
-    title: "Forma poslata!",
-    icon: "success",
-    draggable: true
-  }).then(() => {
-    console.log('2. Korisnik zatvorio alert');
-  });
+  // Swal.fire({
+  //   title: "Forma poslata!",
+  //   icon: "success",
+  //   draggable: true
+  // }).then(() => {
+  //   console.log('Korisnik zatvorio alert');
+  // });
 }
 
